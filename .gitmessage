@@ -1,0 +1,8 @@
+# <type>(<scope>): <subject>
+#
+# Types: feat, fix, docs, style, refactor, perf, test, build, ci, chore, revert
+# Example: feat(http): add health check endpoint
+#
+# Body (optional): explain why this change is needed.
+#
+# Footer (optional): Fixes #123

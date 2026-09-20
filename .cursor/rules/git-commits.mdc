@@ -1,0 +1,28 @@
+---
+description: Enforce Conventional Commits on every git commit
+alwaysApply: true
+---
+
+# Git commit messages
+
+Use [Conventional Commits](https://www.conventionalcommits.org/).
+
+Format:
+
+```
+<type>(<optional-scope>): <subject>
+```
+
+- Allowed types: `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `build`, `ci`, `chore`, `revert`
+- Subject: imperative mood, no trailing period, first line at most 72 characters
+- One logical change per commit; do not mix feat and chore unless they are inseparable
+- Do not skip hooks (`--no-verify`) unless the user explicitly asks
+- Pass the message with a HEREDOC, never `git commit -i`
+
+Examples:
+
+```
+feat: add actix-web hello world HTTP server
+chore: ignore build artifacts and editor files
+ci: run fmt, clippy, tests, coverage, and audit
+```

@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+msg_file="$1"
+first_line="$(head -n1 "$msg_file")"
+
+# Git fills the template with comments; empty/comment-only messages are
+# rejected by git itself.
+if [[ -z "$first_line" || "$first_line" =~ ^# ]]; then
+  exit 0
+fi
+
+if [[ "$first_line" =~ ^(Merge|Revert|fixup!|squash!) ]]; then
+  exit 0
+fi
+
+pattern='^(feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert)(\([a-z0-9._/-]+\))?!?: [^ ].+$'
+
+if ! echo "$first_line" | grep -Eq "$pattern"; then
+  cat >&2 <<'EOF'
+Commit message must follow Conventional Commits.
+
+  <type>(<optional-scope>): <subject>
+
+Examples:
+  feat: add hello world HTTP server
+  feat(http): greet visitors by name
+  fix(server): bind to 127.0.0.1:8000
+  chore: ignore editor and build artifacts
+
+Allowed types:
+  feat fix docs style refactor perf test build ci chore revert
+
+Rules:
+  - type is required and lowercase
+  - colon and space after type/scope
+  - subject is imperative, lowercase start preferred, no trailing period
+  - first line <= 72 characters
+EOF
+  exit 1
+fi
+
+if (( ${#first_line} > 72 )); then
+  echo "Commit subject is ${#first_line} characters; keep it at 72 or fewer." >&2
+  exit 1
+fi

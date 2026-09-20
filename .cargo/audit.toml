@@ -1,0 +1,4 @@
+# actix-web 4 still depends on h2 0.3 via actix-http.
+# The upstream fix is only on h2 >= 0.4.16 (http 1.x), which actix-web 4 cannot use yet.
+[advisories]
+ignore = ["RUSTSEC-2026-0258"]
